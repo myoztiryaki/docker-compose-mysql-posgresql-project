@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  postgresql:
+    restart: always
+    image: postgres:10
+    environment:
+      - POSTGRES_DB=dataops
+      - POSTGRES_USER=dataops_user
+      - POSTGRES_PASSWORD=Ankara06
+    volumes:
+      - ./postgresql_init:/docker-entrypoint-initdb.d
+    ports:
+      - "5433:5432"
+
+  mysql:
+    image: mysql:8.0.31
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=Ankara06
+      - MYSQL_DATABASE=dataops
+      - MYSQL_USER=dataops_user
+      - MYSQL_PASSWORD=Ankara06
+      - MYSQL_ROOT_HOST="%"
+    volumes:
+      - ./conf:/etc/mysql/conf.d
+      - ./mysql_init:/docker-entrypoint-initdb.d
+    ports:
+      - "3306:3306"
